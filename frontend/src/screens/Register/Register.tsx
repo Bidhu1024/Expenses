@@ -2,7 +2,7 @@ import background from "../../assets/backgroundlogin.jpg";
 import { SiGnuprivacyguard } from "react-icons/si";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import type {  RegisterForm } from "../../types/globalTypes";
+import type { RegisterForm } from "../../types/globalTypes";
 import { useNavigate } from "react-router-dom";
 const Register = () => {
   const [register, setRegister] = useState<RegisterForm>({
@@ -11,7 +11,7 @@ const Register = () => {
     password: "",
     phone: "",
   });
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   return (
     <Box
       sx={{
@@ -54,13 +54,20 @@ const Register = () => {
         </Box>
 
         <Typography fontWeight={600} fontSize="1.25rem" textAlign="center">
-          Sign in with email
+          Register to have an account
         </Typography>
 
         <Typography fontSize="0.9rem" textAlign="center" color="text.secondary">
-          Make a new doc to bring your words, data, and teams together for free.
+          This website helps you to manage your expnses on daily basis.
         </Typography>
-
+        <TextField
+          label="Name"
+          placeholder="Enter your Name"
+          size="small"
+          fullWidth
+          value={register.name}
+          onChange={(e) => setRegister({ ...register, name: e.target.value })}
+        />
         <TextField
           label="Email"
           placeholder="Enter your email"
@@ -69,7 +76,14 @@ const Register = () => {
           value={register.email}
           onChange={(e) => setRegister({ ...register, email: e.target.value })}
         />
-
+        <TextField
+          label="Phone"
+          placeholder="Enter your Phone Number"
+          size="small"
+          fullWidth
+          value={register.phone}
+          onChange={(e) => setRegister({ ...register, phone: e.target.value })}
+        />
         <TextField
           label="Password"
           placeholder="Enter your password"
@@ -77,7 +91,9 @@ const Register = () => {
           size="small"
           fullWidth
           value={register.password}
-          onChange={(e) => setRegister({ ...register, password: e.target.value })}
+          onChange={(e) =>
+            setRegister({ ...register, password: e.target.value })
+          }
         />
 
         <Button variant="contained" fullWidth sx={{ mt: 1, fontWeight: 600 }}>
