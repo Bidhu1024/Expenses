@@ -33,3 +33,35 @@ export const signupUser = async(req,res)=>{
     }
 
 }
+
+export const login = async(req,res)=>{
+    try {
+        const {email,password} = req.body;
+        if(!email || !password){
+            res.status(400).json({success:false,message:"Params missing"});
+        }
+        const user = await Auth.findOne({email});
+        if(!user){
+            res.status(400).json({message:"User not found", success:false})
+        }
+        const passwordCheck = await bycrypt.compare(password,user.password)
+        if(!passwordCheck){
+            res.status(400).json({message:"User not found", success:false})
+        }
+
+        const token = jwt.sign({id:user._id},process.env.JWT_SECRET,{
+            expiresIn:"10d"
+        })
+        res.status(200).json({
+            token,
+            user:{
+                name:user.name,
+                phone:user.phone,
+                id:user._id,
+                email:user.email
+            }
+        })
+    } catch (error) {
+        res.status(500).json({success:false,message:"Internal server Error"})
+    }
+}
