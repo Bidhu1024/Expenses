@@ -1,5 +1,5 @@
-import { Auth } from "../models/authModel";
-import bycrypt from "bycryptjs"
+import { Auth } from "../models/authModel.js";
+import bcrypt from "bcryptjs"
 export const signupUser = async(req,res)=>{
     try {
         const {name,phone,email,password} = req.body;
@@ -11,8 +11,8 @@ export const signupUser = async(req,res)=>{
         if(validEmail){
             return res.status(409).json({message:"User Already Exists", success:false})
         }
-        const salt = await bycrypt.getSalt(10)
-        const hashedPassword = await bycrypt.hash(password,salt)
+        const salt = await bcrypt.getSalt(10)
+        const hashedPassword = await bcrypt.hash(password,salt)
 
         const newUser = await Auth.create({
             name,
@@ -44,7 +44,7 @@ export const login = async(req,res)=>{
         if(!user){
             res.status(400).json({message:"User not found", success:false})
         }
-        const passwordCheck = await bycrypt.compare(password,user.password)
+        const passwordCheck = await bcrypt.compare(password,user.password)
         if(!passwordCheck){
             res.status(400).json({message:"User not found", success:false})
         }
