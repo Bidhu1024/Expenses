@@ -97,16 +97,16 @@ const Register = () => {
         />
 
         <Button variant="contained" fullWidth sx={{ mt: 1, fontWeight: 600 }}>
-          Get Started
+          Register
         </Button>
 
         <Typography textAlign="center" fontSize="0.875rem">
-          New to this place?{" "}
+          Already have an account
           <span
-            style={{ color: "#1976d2", cursor: "pointer", fontWeight: 500 }}
-            onClick={() => navigate("/register")}
+            style={{ color: "#1976d2", cursor: "pointer", fontWeight: 600 }}
+            onClick={() => navigate("/")}
           >
-            Register here
+            {"  "} Login
           </span>
         </Typography>
       </Box>
