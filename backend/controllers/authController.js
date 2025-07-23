@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs"
 export const signupUser = async(req,res)=>{
     try {
         const {name,phone,email,password} = req.body;
-        if(!name || !phone || !email || password){
+        if(!name || !phone || !email || !password){
             return res.status(400).json({message:"Params Missing", success:false})
         }
 
@@ -11,7 +11,7 @@ export const signupUser = async(req,res)=>{
         if(validEmail){
             return res.status(409).json({message:"User Already Exists", success:false})
         }
-        const salt = await bcrypt.getSalt(10)
+        const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(password,salt)
 
         const newUser = await Auth.create({

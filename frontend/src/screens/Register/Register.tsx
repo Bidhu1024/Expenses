@@ -4,6 +4,8 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import type { RegisterForm } from "../../types/globalTypes";
 import { useNavigate } from "react-router-dom";
+import { signUp } from "../../api/auth";
+import { toast } from "react-toastify";
 const Register = () => {
   const [register, setRegister] = useState<RegisterForm>({
     name: "",
@@ -11,6 +13,17 @@ const Register = () => {
     password: "",
     phone: "",
   });
+
+  const handleRegister = async(e:React.MouseEvent<HTMLButtonElement>)=>{
+    try {
+      e.preventDefault()
+     await signUp(register)
+     toast.success("User Added Successfully")
+    } catch (error) {
+      console.log(error)
+       toast.error("Something went wrong!")
+    }
+  }
   const navigate = useNavigate();
   return (
     <Box
@@ -96,7 +109,7 @@ const Register = () => {
           }
         />
 
-        <Button variant="contained" fullWidth sx={{ mt: 1, fontWeight: 600 }}>
+        <Button variant="contained" fullWidth sx={{ mt: 1, fontWeight: 600 }} onClick={handleRegister}>
           Register
         </Button>
 
