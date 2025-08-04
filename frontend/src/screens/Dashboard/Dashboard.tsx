@@ -6,7 +6,7 @@ const Dashboard = () => {
     <Box
       width="100%"
       height={"100vh"}
-      sx={{ background: "linear-gradient(to bottom, #f9f9f9, #e0f7fa)" }}
+      sx={{ background: "#191970" }}
     >
       <Navbar />
     </Box>

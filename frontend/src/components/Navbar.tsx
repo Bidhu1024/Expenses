@@ -13,26 +13,23 @@ const Navbar = () => {
     <Box
       sx={{
         width: "100%",
-        minHeight: "3.5rem", // Increased height or use minHeight
+        minHeight: "3.5rem", 
         px: 3,
         py: 1,
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        backgroundColor: "#2196f3", // Optional attractive bg
+        backgroundColor: "#F5F5DC",
         color: "#fff",
       }}
     >
-      <Typography variant="h6" sx={{ fontWeight: 600 }}>
+      <Typography variant="h6" sx={{ fontWeight: 600,color:"darkred" }}>
         Expense
       </Typography>
-      <Box>
-        <Button >
-            Add Expense
-        </Button>
-      <LogoutIcon onClick={handleLogout} sx={{ cursor: "pointer" }} />
+      <Box sx={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+        <Button variant="outlined" sx={{bgcolor:"white", color:"blue"}}>Add Expense</Button>
+        <LogoutIcon onClick={handleLogout}  sx={{ cursor: "pointer",color:"blue" }} />
       </Box>
-
     </Box>
   );
 };
