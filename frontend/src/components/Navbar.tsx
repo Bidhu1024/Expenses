@@ -1,8 +1,11 @@
 import { Box, Button, Typography } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router-dom";
-
-const Navbar = () => {
+import type { FC } from "react";
+interface Navbar{
+  setOpen:(val:boolean)=>void
+}
+const Navbar:FC<Navbar> = ({setOpen}) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -27,7 +30,7 @@ const Navbar = () => {
         Expense
       </Typography>
       <Box sx={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-        <Button variant="outlined" sx={{bgcolor:"white", color:"blue"}}>Add Expense</Button>
+        <Button onClick={()=>setOpen(true)} variant="outlined" sx={{bgcolor:"white", color:"blue"}}>Add Expense</Button>
         <LogoutIcon onClick={handleLogout}  sx={{ cursor: "pointer",color:"blue" }} />
       </Box>
     </Box>
