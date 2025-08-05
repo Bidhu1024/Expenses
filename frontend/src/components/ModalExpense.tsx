@@ -77,9 +77,7 @@ const ModalExpense: FC<Modal> = ({ open, setOpen }) => {
         </Box>
 
         <Typography>Date</Typography>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DatePicker />
-        </LocalizationProvider>
+
         <Typography>Notes</Typography>
         <TextareaAutosize name="title" placeholder="Enter title" />
         <Button>Cancel</Button>
