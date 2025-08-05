@@ -6,7 +6,10 @@ import {
   TextareaAutosize,
   Button,
 } from "@mui/material";
+import DatePicker from "react-datepicker";
 
+import "react-datepicker/dist/react-datepicker.css";
+import "./datepicker.css"
 import { useState, type FC } from "react";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -32,7 +35,7 @@ const style = {
 
 const ModalExpense: FC<Modal> = ({ open, setOpen }) => {
   const [category, setCategory] = useState<string>("No Category");
-
+  const [startDate, setStartDate] = useState<Date | null>(new Date());
   const handleChange = (event: SelectChangeEvent) => {
     setCategory(event.target.value as string);
   };
@@ -69,19 +72,27 @@ const ModalExpense: FC<Modal> = ({ open, setOpen }) => {
               size="small"
               onChange={handleChange}
             >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              <MenuItem value={"food"}>Food</MenuItem>
+              <MenuItem value={"lifestyle"}>Life Style</MenuItem>
+              <MenuItem value={"travel"}>Travel</MenuItem>
+              <MenuItem value={"others"}>Others</MenuItem>
             </Select>
           </FormControl>
         </Box>
 
         <Typography>Date</Typography>
-
+        <DatePicker
+        className="date-picker"
+          selected={startDate}
+          onChange={(date) => setStartDate(date)}
+        />
         <Typography>Notes</Typography>
-        <TextareaAutosize name="title" placeholder="Enter title" />
-        <Button>Cancel</Button>
-        <Button>Save</Button>
+        <TextareaAutosize name="title" placeholder="Enter title" minRows={4} />
+        <Box sx={{display:"flex",alignItems:"center", gap:"4rem",width:"100%",justifyContent:"center"}}>
+       <Button variant="outlined" onClick={()=>setOpen(false)}  sx={{color:"red",borderColor:"red"}}>Cancel</Button>
+        <Button variant="contained">Save</Button>
+        </Box>
+ 
       </Box>
     </Modal>
   );
