@@ -6,5 +6,5 @@ import { authenticateUser } from "../middleware/auth.js"
 const router = express.Router()
 
 router.post('/create_expense',authenticateUser,createExpense)
-router.get('/get_expenses/:id',authenticateUser,getExpenses)
+router.get('/get_expenses',authenticateUser,getExpenses)
 export default router
