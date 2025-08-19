@@ -10,7 +10,7 @@ const Dashboard = () => {
     <Box
       width="100%"
       height={"100vh"}
-      sx={{ background: "linear-gradient(90deg, #00f260, #0575e6)" }}
+      sx={{ background: "#ADBBDA" }}
     >
       <Navbar setOpen={setOpen} />
       <ModalExpense open={open} setOpen={setOpen} />

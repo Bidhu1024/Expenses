@@ -1,4 +1,5 @@
 import React, { type FC } from 'react'
+import { FcBullish } from "react-icons/fc";
 
 import { Box } from '@mui/material'
 interface Card{
@@ -6,7 +7,8 @@ interface Card{
 }
 const ExpenseCard:FC<Card> = ({dataz}) => {
   return (
-  <Box sx={{height:"10rem", border:"1px solid white", width:"15rem"}}>
+  <Box sx={{height:"10rem", border:"1px solid white", width:"15rem",bgcolor:"#2E3944"}}>
+    <FcBullish size={40}/>
     {dataz._id}
   </Box>
   )
