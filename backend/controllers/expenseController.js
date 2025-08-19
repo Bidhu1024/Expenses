@@ -39,24 +39,25 @@ export const createExpense = async (req, res) => {
 };
 
 export const getExpenses = async (req, res) => {
-
-
   try {
-    const id = req.user.id
-    const expenses = await Expense.find({user:id})
+    const id = req.user.id;
+    const expenses = await Expense.find({ user: id });
 
-    if(!expenses || expenses.length===0){
-      return res.status(404).json({message:"No expeses found for this user",success:false});
-
+    if (!expenses || expenses.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No expeses found for this user", success: false });
     }
     return res.status(200).json({
-      data:{
-        expenses
+      data: {
+        expenses,
       },
-      success:true,
-      count:expenses.length
-    })
+      success: true,
+      count: expenses.length,
+    });
   } catch (error) {
- return res.status(500).json({message:"Internal server error",success:false});
+    return res
+      .status(500)
+      .json({ message: "Internal Server Error", success: false });
   }
 };

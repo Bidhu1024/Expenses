@@ -1,5 +1,5 @@
 import express from "express"
-import { createExpense } from "../controllers/expenseController.js"
+import { createExpense, getExpenses } from "../controllers/expenseController.js"
 import { authenticateUser } from "../middleware/auth.js"
 
 
