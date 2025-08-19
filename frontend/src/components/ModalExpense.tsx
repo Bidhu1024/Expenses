@@ -9,11 +9,15 @@ import {
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
-import "./datepicker.css"
-import { useState, type FC } from "react";
+import "./datepicker.css";
+import { memo, useState, type FC } from "react";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { type SelectChangeEvent } from "@mui/material/Select";
+import type { modalDatas } from "../types/globalTypes";
+import { createExpense } from "../api/expense";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 type Modal = {
   open: boolean;
   setOpen: (val: boolean) => void;
@@ -34,11 +38,35 @@ const style = {
 };
 
 const ModalExpense: FC<Modal> = ({ open, setOpen }) => {
-  const [category, setCategory] = useState<string>("No Category");
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
-  const handleChange = (event: SelectChangeEvent) => {
-    setCategory(event.target.value as string);
+  const [modalData, setModalData] = useState<modalDatas>({
+    title: "",
+    amount: "",
+    category: "",
+    date: "",
+    notes: "",
+  });
+  const navigate = useNavigate();
+  const handleCreateExpense = async (
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    try {
+      e.preventDefault();
+      await createExpense(modalData);
+      setOpen(false);
+      toast.success("Expense created successfully");
+      setModalData({
+        title: "",
+        amount: "",
+        category: "",
+        date: "",
+        notes: "",
+      });
+      navigate("/dashboard");
+    } catch (err) {
+      console.log(err);
+    }
   };
+  console.log(modalData);
   return (
     <Modal
       open={open}
@@ -54,6 +82,10 @@ const ModalExpense: FC<Modal> = ({ open, setOpen }) => {
           placeholder="Enter title"
           size="small"
           fullWidth
+          value={modalData.title}
+          onChange={(
+            e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+          ) => setModalData({ ...modalData, title: e.target.value as string })}
         />
         <Typography>Amount</Typography>
         <TextField
@@ -61,6 +93,10 @@ const ModalExpense: FC<Modal> = ({ open, setOpen }) => {
           placeholder="Enter Amount"
           size="small"
           fullWidth
+          value={modalData.amount}
+          onChange={(
+            e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+          ) => setModalData({ ...modalData, amount: e.target.value as string })}
         />
         <Typography>Category</Typography>
         <Box sx={{ minWidth: 120 }}>
@@ -68,9 +104,11 @@ const ModalExpense: FC<Modal> = ({ open, setOpen }) => {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={category}
               size="small"
-              onChange={handleChange}
+              value={modalData.category}
+              onChange={(e: SelectChangeEvent) =>
+                setModalData({ ...modalData, category: e.target.value })
+              }
             >
               <MenuItem value={"food"}>Food</MenuItem>
               <MenuItem value={"lifestyle"}>Life Style</MenuItem>
@@ -82,20 +120,51 @@ const ModalExpense: FC<Modal> = ({ open, setOpen }) => {
 
         <Typography>Date</Typography>
         <DatePicker
-        className="date-picker"
-          selected={startDate}
-          onChange={(date) => setStartDate(date)}
+          className="date-picker"
+          value={modalData.date}
+          selected={modalData.date ? new Date(modalData.date) : null}
+          onChange={(date: Date | null) => {
+            if (date) {
+              setModalData({
+                ...modalData,
+                date: date.toISOString().split("T")[0],
+              });
+            }
+          }}
         />
         <Typography>Notes</Typography>
-        <TextareaAutosize name="title" placeholder="Enter title" minRows={4} />
-        <Box sx={{display:"flex",alignItems:"center", gap:"4rem",width:"100%",justifyContent:"center"}}>
-       <Button variant="outlined" onClick={()=>setOpen(false)}  sx={{color:"red",borderColor:"red"}}>Cancel</Button>
-        <Button variant="contained">Save</Button>
+        <TextareaAutosize
+          value={modalData.notes}
+          onChange={(
+            e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+          ) => setModalData({ ...modalData, notes: e.target.value as string })}
+          name="title"
+          placeholder="Enter title"
+          minRows={4}
+        />
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: "4rem",
+            width: "100%",
+            justifyContent: "center",
+          }}
+        >
+          <Button
+            variant="outlined"
+            onClick={() => setOpen(false)}
+            sx={{ color: "red", borderColor: "red" }}
+          >
+            Cancel
+          </Button>
+          <Button onClick={handleCreateExpense} variant="contained">
+            Save
+          </Button>
         </Box>
- 
       </Box>
     </Modal>
   );
 };
 
-export default ModalExpense;
+export default memo(ModalExpense);

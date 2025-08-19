@@ -9,3 +9,11 @@ export interface RegisterForm{
   phone:string,
   name:string,
 }
+
+export interface modalDatas{
+  title:string,
+  amount:string,
+  date:string,
+  category:string,
+  notes:string,
+}
