@@ -61,3 +61,25 @@ export const getExpenses = async (req, res) => {
       .json({ message: "Internal Server Error", success: false });
   }
 };
+
+export const deleteExpense = async(req,res)=>{
+  try {
+    const {id} = req.params;
+    const deleteExpense = await Expense.findByIdAndDelete(id)
+
+    if(!deleteExpense){
+      return res.status(404).json({success:false,message:"No user found"})
+
+    }
+
+    return res.status(200).json({
+      success:true,
+      message:"Expense deleted successfully"
+    })
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Internal Server Error", success: false });
+  
+  }
+}
