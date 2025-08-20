@@ -1,14 +1,20 @@
-import React, { type FC } from "react";
+import { type FC } from "react";
 import { FcBullish } from "react-icons/fc";
 import { Box, Stack, Typography, Chip } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { deleteExpense, getExpenses } from "../../api/expense";
 interface Card {
   dataz: any;
 }
 
 const ExpenseCard: FC<Card> = ({ dataz }) => {
   const handleDelete = async (id: string) => {
-    console.log(id);
+ try {
+  await deleteExpense(id)
+await getExpenses()
+ } catch (error) {
+  console.log(error)
+ }
   };
   return (
     <Box
